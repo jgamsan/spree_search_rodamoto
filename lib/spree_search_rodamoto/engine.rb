@@ -10,9 +10,7 @@ module SpreeSearchRodamoto
     end
 
     def self.activate
-      if Spree::Config.instance
-        Spree::Config.searcher_class = Spree::Search::Rodamoto
-      end
+      Spree::Config.searcher_class = Spree::Search::Rodamoto
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
