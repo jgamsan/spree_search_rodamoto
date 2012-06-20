@@ -3,12 +3,12 @@ module Spree::Search
     def get_base_scope
       base_scope = @cached_product_group ? @cached_product_group.products.active : Spree::Product.active
       base_scope = base_scope.by_width(tire_width_id)
-      base_scope = base_scope.by_profile(profile)
-      base_scope = base_scope.by_innertube(innertube)
-      base_scope = base_scope.by_ic(ic)
-      base_scope = base_scope.by_speed(speed)
-      base_scope = base_scope.by_fr(fr)
-      base_scope = base_scope.by_tttl(tttl)
+      base_scope = base_scope.by_profile(tire_profile_id)
+      base_scope = base_scope.by_innertube(tire_innertube_id)
+      base_scope = base_scope.by_ic(tire_ic_id)
+      base_scope = base_scope.by_speed(tire_speed_code_id)
+      base_scope = base_scope.by_fr(tire_fr_id)
+      base_scope = base_scope.by_tttl(tire_tttl_id)
       base_scope = Spree::Product.active
       base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
       base_scope = get_products_conditions_for(base_scope, keywords) unless keywords.blank?
