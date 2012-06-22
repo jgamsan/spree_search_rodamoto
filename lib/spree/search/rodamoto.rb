@@ -5,7 +5,7 @@ module Spree::Search
       base_scope = base_scope.by_width(tire_width_id) if tire_width_id
       base_scope = base_scope.by_profile(tire_profile_id) if tire_profile_id
       base_scope = base_scope.by_innertube(tire_innertube_id) if tire_innertube_id
-      base_scope = base_scope.by_ic(tire_ic_id) if tire_id_id
+      base_scope = base_scope.by_ic(tire_ic_id) if tire_ic_id
       base_scope = base_scope.by_speed(tire_speed_code_id) if tire_speed_code_id
       base_scope = base_scope.by_fr(tire_fr_id) if tire_fr_id
       base_scope = base_scope.by_tttl(tire_tttl_id) if tire_tttl_id
