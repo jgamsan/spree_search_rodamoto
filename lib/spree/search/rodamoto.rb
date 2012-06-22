@@ -19,13 +19,13 @@ module Spree::Search
     
     def prepare(params)
       super
-      @properties[:tire_width_id] = params[:tire_width_id]
-      @properties[:tire_profile_id] = params[:tire_profile_id]
-      @properties[:tire_innertube_id] = params[:tire_innertube_id]
-      @properties[:tire_ic_id] = params[:tire_ic_id]
-      @properties[:tire_speed_code_id] = params[:tire_speed_code_id]
-      @properties[:tire_fr_id] = params[:tire_fr_id]
-      @properties[:tire_tttl_id] = params[:tire_tttl_id]
+      @properties[:tire_width_id] = params[:tire_width_id].empty? ? nil : params[:tire_width_id]
+      @properties[:tire_profile_id] = params[:tire_profile_id].empty? ? nil : params[:tire_profile_id]
+      @properties[:tire_innertube_id] = params[:tire_innertube_id].empty? ? nil : params[:tire_innertube_id]
+      @properties[:tire_ic_id] = params[:tire_ic_id].empty? ? nil : params[:tire_ic_id]
+      @properties[:tire_speed_code_id] = params[:tire_speed_code_id].empty? ? nil : params[:tire_speed_code_id]
+      @properties[:tire_fr_id] = params[:tire_fr_id].empty? ? nil : params[:tire_fr_id]
+      @properties[:tire_tttl_id] = params[:tire_tttl_id].empty? ? nil : params[:tire_tttl_id]
     end    
   end
 end
