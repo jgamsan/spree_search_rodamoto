@@ -18,7 +18,13 @@ module Spree::Search
     end
     
     def prepare(params)
-      super
+      @properties[:taxon] = params[:taxon].blank? ? nil : Spree::Taxon.find(params[:taxon])
+      @properties[:keywords] = params[:keywords]
+      @properties[:search] = params[:search]
+
+      per_page = params[:per_page].to_i
+      @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
+      @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
       @properties[:tire_width_id] = params[:tire_width_id].empty? ? nil : params[:tire_width_id]
       @properties[:tire_profile_id] = params[:tire_profile_id].empty? ? nil : params[:tire_profile_id]
       @properties[:tire_innertube_id] = params[:tire_innertube_id].empty? ? nil : params[:tire_innertube_id]
