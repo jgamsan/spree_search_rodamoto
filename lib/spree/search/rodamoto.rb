@@ -2,7 +2,7 @@ module Spree::Search
   class Rodamoto < Spree::Core::Search::Base
     def get_base_scope
       base_scope = @cached_product_group ? @cached_product_group.products.active : Spree::Product.active
-      base_scope = base_scope.by_width(tire_width_id) if tire_width_if
+      base_scope = base_scope.by_width(tire_width_id) if tire_width_id
       base_scope = base_scope.by_profile(tire_profile_id) if tire_profile_id
       base_scope = base_scope.by_innertube(tire_innertube_id) if tire_innertube_id
       base_scope = base_scope.by_ic(tire_ic_id) if tire_id_id
