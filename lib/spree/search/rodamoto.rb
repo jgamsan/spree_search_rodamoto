@@ -54,9 +54,7 @@ module Spree::Search
       per_page = params[:per_page].to_i
       @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
       @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
-      unless params[:tire_width_id].nil?
-        @properties[:tire_width_id] = params[:tire_width_id].empty? ? nil : params[:tire_width_id]
-      end
+      @properties[:tire_width_id] = params[:tire_width_id].blank? ? nil : params[:tire_width_id]
       unless params[:tire_profile_id].nil?
         @properties[:tire_profile_id] = params[:tire_profile_id].empty? ? nil : params[:tire_profile_id]
       end
