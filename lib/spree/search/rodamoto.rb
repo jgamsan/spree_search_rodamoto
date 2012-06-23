@@ -12,7 +12,8 @@ module Spree::Search
     end
     
     def get_products_conditions_for_width(base_scope, width)
-      Array.new(width.to_i, "variants.tire_width_id = ?").join(' OR ') 
+      Array.new(width.to_i, "variants.tire_width_id = ?").join(' OR ')
+      base_scope.joins(:variants_including_master).where([where_str, values.map{|value| "%#{value}%"} * fields.size].flatten)
     end
     
     def get_products_conditions_for_rodamoto(base_scope, parametros)
