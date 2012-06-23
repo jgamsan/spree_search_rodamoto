@@ -12,7 +12,7 @@ module Spree::Search
     end
     
     def get_products_conditions_for_width(base_scope, width)
-      Array.new(width, "variants.tire_width_id = ?").join(' AND ') 
+      Array.new(width.to_i, "variants.tire_width_id = ?").join(' AND ') 
     end
     
     def get_products_conditions_for_rodamoto(base_scope, parametros)
