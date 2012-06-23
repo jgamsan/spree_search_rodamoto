@@ -50,26 +50,26 @@ module Spree::Search
       per_page = params[:per_page].to_i
       @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
       @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
-      unless params[:tire_width_id].empty? || params[:tire_width_id].nil?
-        @properties[:tire_width_id] = params[:tire_width_id]
+      unless params[:tire_width_id].nil?
+        @properties[:tire_width_id] = params[:tire_width_id].empty? ? nil : params[:tire_width_id]
       end
-      unless params[:tire_profile_id].empty? || params[:tire_profile_id].nil?
-        @properties[:tire_profile_id] = params[:tire_profile_id]
+      unless params[:tire_profile_id].nil?
+        @properties[:tire_profile_id] = params[:tire_profile_id].empty? ? nil : params[:tire_profile_id]
       end
-      unless params[:tire_innertube_id].empty? || params[:tire_innertube_id].nil?
-        @properties[:tire_innertube_id] = params[:tire_innertube_id]
+      unless params[:tire_innertube_id].nil?
+        @properties[:tire_innertube_id] = params[:tire_innertube_id].empty? ? nil : params[:tire_innertube_id]
       end
-      unless params[:tire_speed_code_id].empty? || params[:tire_speed_code_id].nil?
-        @properties[:tire_speed_code_id] = params[:tire_speed_code_id]
+      unless params[:tire_speed_code_id].nil?
+        @properties[:tire_speed_code_id] = params[:tire_speed_code_id].empty? ? nil : params[:tire_speed_code_id]
       end
-      unless params[:tire_ic_id].empty? || params[:tire_ic_id].nil?
-        @properties[:tire_ic_id] = params[:tire_ic_id]
+      unless params[:tire_ic_id].nil?
+        @properties[:tire_ic_id] = params[:tire_ic_id].empty? ? nil : params[:tire_ic_id]
       end
-      unless params[:tire_fr_id].empty? || params[:tire_fr_id].nil?
-        @properties[:tire_fr_id] = params[:tire_fr_id]
+      unless params[:tire_fr_id].nil?
+        @properties[:tire_fr_id] = params[:tire_fr_id].empty? ? nil : params[:tire_fr_id]
       end
-      unless params[:tire_tttl_id].empty? || params[:tire_tttl_id].nil?
-        @properties[:tire_tttl_id] = params[:tire_tttl_id]
+      unless params[:tire_tttl_id].nil?
+        @properties[:tire_tttl_id] = params[:tire_tttl_id].empty? ? nil : params[:tire_tttl_id]
       end
     end    
   end
