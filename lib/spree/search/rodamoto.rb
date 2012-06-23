@@ -5,41 +5,42 @@ module Spree::Search
       base_scope = Spree::Product.active
       base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
       base_scope = get_products_conditions_for(base_scope, keywords) unless keywords.blank?
+      base_scope = get_products_conditions_for_rodamoto(base_scope, params)
       base_scope = base_scope.on_hand unless Spree::Config[:show_zero_stock_products]
       base_scope = add_search_scopes(base_scope)
       base_scope
     end
     
-    def get_products_conditions_for(base_scope, query)
-      fields = [:name, :description, :sku, :tire_width_id, :tire_profile_id, :tire_innertube_id,
+    def get_products_conditions_for_rodamoto(base_scope, parametros)
+      fields = [:tire_width_id, :tire_profile_id, :tire_innertube_id,
                 :tire_speed_code_id, :tire_ic_id, :tire_fr_id, :tire_tttl_id]
-      values = query.split
-
       where_str = fields.map{|field|
-        case field
-          when :sku
-            Array.new(values.size, "variants.sku LIKE ?").join(' OR ')
-          when :tire_width_id
-            Array.new(values.size, "variants.tire_width_id = ?").join(' OR ')
-          when :tire_profile_id
-            Array.new(values.size, "variants.tire_profile_id = ?").join(' OR ')
-          when :tire_innertube_id
-            Array.new(values.size, "variants.tire_innertube_id = ?").join(' OR ')
-          when :tire_speed_code_id
-            Array.new(values.size, "variants.tire_speed_code_id = ?").join(' OR ')
-          when :tire_ic_id
-            Array.new(values.size, "variants.tire_ic_id = ?").join(' OR ')
-          when :tire_fr_id
-            Array.new(values.size, "variants.tire_fr_id = ?").join(' OR ')
-          when :tire_tttl_id
-            Array.new(values.size, "variants.tire_tttl_id = ?").join(' OR ')
-          else
-            Array.new(values.size, "products.#{field} LIKE ?").join(' OR ')
+        if field == :tire_width_id && !parametros[:tire_width_id].empty?
+          Array.new(parametros[:tire_width_id], "variants.tire_width_id = ?").join(' AND ')
+        end
+        if field == :tire_profile_id && !parametros[:tire_profile_id].empty?
+          Array.new(parametros[:tire_profile_id], "variants.tire_profile_id = ?").join(' AND ')
+        end
+        if field == :tire_innertube_id && !parametros[:tire_innertube_id].empty?
+          Array.new(parametros[:tire_innertube_id], "variants.tire_innertube_id = ?").join(' AND ')
+        end
+        if field == :tire_speed_code_id && !parametros[:tire_speed_code_id].empty?
+          Array.new(parametros[:tire_speed_code_id], "variants.tire_speed_code_id = ?").join(' AND ')
+        end
+        if field == :tire_ic_id && !parametros[:tire_ic_id].empty?
+          Array.new(parametros[:tire_ic_id], "variants.tire_ic_id = ?").join(' AND ')
+        end
+        if field == :tire_fr_id && !parametros[:tire_fr_id].empty?
+          Array.new(parametros[:tire_fr_id], "variants.tire_fr_id = ?").join(' AND ')
+        end
+        if field == :tire_tttl_id && !parametros[:tire_tttl_id].empty?
+          Array.new(parametros[:tire_tttl_id], "variants.tire_tttl_id = ?").join(' AND ')
         end
       }.join(' OR ')
-
+      
       base_scope.joins(:variants_including_master).where([where_str, values.map{|value| "%#{value}%"} * fields.size].flatten)
     end
+    
     
     def prepare(params)
       @properties[:taxon] = params[:taxon].blank? ? nil : Spree::Taxon.find(params[:taxon])
@@ -49,13 +50,13 @@ module Spree::Search
       per_page = params[:per_page].to_i
       @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
       @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
-      #@properties[:tire_width_id] = params[:tire_width_id].empty? ? nil : params[:tire_width_id]
-      #@properties[:tire_profile_id] = params[:tire_profile_id].empty? ? nil : params[:tire_profile_id]
-      #@properties[:tire_innertube_id] = params[:tire_innertube_id].empty? ? nil : params[:tire_innertube_id]
-      #@properties[:tire_ic_id] = params[:tire_ic_id].empty? ? nil : params[:tire_ic_id]
-      #@properties[:tire_speed_code_id] = params[:tire_speed_code_id].empty? ? nil : params[:tire_speed_code_id]
-      #@properties[:tire_fr_id] = params[:tire_fr_id].empty? ? nil : params[:tire_fr_id]
-      #@properties[:tire_tttl_id] = params[:tire_tttl_id].empty? ? nil : params[:tire_tttl_id]
+      @properties[:tire_width_id] = params[:tire_width_id].empty? ? nil : params[:tire_width_id]
+      @properties[:tire_profile_id] = params[:tire_profile_id].empty? ? nil : params[:tire_profile_id]
+      @properties[:tire_innertube_id] = params[:tire_innertube_id].empty? ? nil : params[:tire_innertube_id]
+      @properties[:tire_ic_id] = params[:tire_ic_id].empty? ? nil : params[:tire_ic_id]
+      @properties[:tire_speed_code_id] = params[:tire_speed_code_id].empty? ? nil : params[:tire_speed_code_id]
+      @properties[:tire_fr_id] = params[:tire_fr_id].empty? ? nil : params[:tire_fr_id]
+      @properties[:tire_tttl_id] = params[:tire_tttl_id].empty? ? nil : params[:tire_tttl_id]
     end    
   end
 end
