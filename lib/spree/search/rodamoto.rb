@@ -11,8 +11,9 @@ module Spree::Search
       base_scope
     end
     
-    def get_products_conditions_for_width(base_scope, width)
-      where_str = Array.new(width.to_i, "variants.tire_width_id = ?").join(' OR ')
+    def get_products_conditions_for_width(base_scope, query)
+      values = query.split
+      where_str = Array.new(values.size, "variants.tire_width_id = ?").join(' OR ')
       base_scope.joins(:variants_including_master).where([where_str, values.map{|value| "%#{value}%"} * fields.size].flatten)
     end
     
