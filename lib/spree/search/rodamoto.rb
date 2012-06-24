@@ -5,7 +5,7 @@ module Spree::Search
       base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
       base_scope = get_products_conditions_for(base_scope, keywords) unless keywords.blank?
       #base_scope = get_products_conditions_for_width(base_scope, tire_width_id) unless tire_width_id.blank?
-      base_scope = base_scope.by_width(tire_width_id) if tire_width_id
+      base_scope = base_scope.by_width(tire_width_id.to_i) if tire_width_id
       base_scope = base_scope.on_hand unless Spree::Config[:show_zero_stock_products]
       base_scope = add_search_scopes(base_scope)
       base_scope
