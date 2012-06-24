@@ -1,5 +1,6 @@
 Spree::Product.class_eval do
-  scope :by_width, lambda { |width| where(:tire_width_id => width) }
+  #scope :by_width, lambda { |width| where(:tire_width_id => width) }
+  scope :by_width, lambda { |width| joins(:variants).where("spree_variants.tire_width_id = ?", width)}
   scope :by_profile, lambda { |profile| where(:tire_profile_id => profile) }
   scope :by_innertube, lambda { |innertube| where(:tire_innertube_id => innertube) }
   scope :by_ic, lambda { |ic| where(:tire_ic_id => ic) }
