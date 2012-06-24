@@ -1,7 +1,6 @@
 module Spree::Search
   class Rodamoto < Spree::Core::Search::Base
     def get_base_scope
-      base_scope = @cached_product_group ? @cached_product_group.products.active : Spree::Product.active
       base_scope = Spree::Product.active
       base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
       base_scope = get_products_conditions_for(base_scope, keywords) unless keywords.blank?
